@@ -18,7 +18,7 @@ shape_id_from_trips = list(shape_id_from_trips)
 ##get latlon from shapes
 shapes = pd.read_excel("Desktop\\shapes.xlsx")
 shapes.set_index('shape_id', inplace = True)
-row_data_shapes = shapes.loc[ shape_id_from_trips , ["shape_pt_lat" , "shape_pt_lon"] ]
+row_data_shapes = shapes.loc[shape_id_from_trips ,["shape_pt_lat","shape_pt_lon"]]
 #row_data_shapes
 #row_data_shapes.to_csv("Desktop\\ShapeID.csv", index = False)
 
@@ -26,7 +26,7 @@ row_data_shapes = shapes.loc[ shape_id_from_trips , ["shape_pt_lat" , "shape_pt_
 import folium
 latlon = [tuple(x) for x in row_data_shapes.values]
 #latlon
-mapit = folium.Map(location=[49.2827, 123.1207],  tiles = "Stamen Toner",)
+mapit = folium.Map(location=[49.2827, 123.1207], tiles = "Stamen Toner")
 for coord in latlon:
     folium.Marker(location=[coord[0], coord[1]]).add_to(mapit)
 mapit.save("Desktop\\map.html")
