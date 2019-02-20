@@ -1,7 +1,7 @@
 import pandas as pd
 
 ##get user routeID from trips
-trips = pd.read_excel("D:\\Julian\\3Feb18\\trips.xlsx")
+trips = pd.read_excel("Desktop\\trips.xlsx")
 trips.set_index('route_id', inplace = True)
 user_route_id = input("Please Enter the Route ID:")
 row_data_trips = trips.loc[ int(user_route_id) , : ]
@@ -16,7 +16,7 @@ shape_id_from_trips = list(shape_id_from_trips)
 #shape_id_from_trips
 
 ##get latlon from shapes
-shapes = pd.read_excel("D:\\Julian\\3Feb18\\shapes.xlsx")
+shapes = pd.read_excel("Desktop\\shapes.xlsx")
 shapes.set_index('shape_id', inplace = True)
 row_data_shapes = shapes.loc[ shape_id_from_trips , ["shape_pt_lat" , "shape_pt_lon"] ]
 #row_data_shapes
