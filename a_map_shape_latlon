@@ -1,15 +1,13 @@
 import pandas as pd
 
-##get user routeID from trips
+##get routeID from user
 trips = pd.read_excel("Desktop\\trips.xlsx")
 trips.set_index('route_id', inplace = True)
+
 user_route_id = input("Please Enter the Route ID:")
 row_data_trips = trips.loc[ int(user_route_id) , : ]
-row_data_trips
 
 ##get shapeIDs associated with user routeID
-row_data_trips = trips.loc[ int(user_route_id) , : ]
-row_data_trips
 shape_id_from_trips = row_data_trips.loc[: , "shape_id"].tolist()
 shape_id_from_trips = set(shape_id_from_trips)
 shape_id_from_trips = list(shape_id_from_trips)
