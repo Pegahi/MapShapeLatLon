@@ -1,0 +1,37 @@
+import pandas as pd
+trips = pd.read_excel("D:\\Julian\\3Feb18\\trips.xlsx")
+unique_routeIDs_list = list(set(trips.loc[:,"route_id"].tolist()))
+
+#create dictionary, key = route ID, value = a list of associated shapes
+mydict = {}
+keys = unique_routeIDs_list
+values = []
+for u in unique_routeIDs_list:
+    values.append(list(set(trips[trips['route_id'] == u]["shape_id"].values)))  
+for i in range(0, len(unique_routeIDs_list)):
+        mydict.update({keys[i]:values[i]})
+#----------------------------------------------------------     
+# user_route_id = int(input("Please Enter the Route ID:"))
+# user_route_id = 30832
+# mydict[user_route_id]
+# mydict[user_route_id][0]
+# mydict[user_route_id][0]
+#----------------------------------------------------------
+# user_route_id = 30832
+# user_shape_id = []
+# user_shape_id.append(mydict[user_route_id][0])
+# print(user_shape_id)
+
+# basically user_shape_id = mydict[user_route_id]
+#----------------------------------------------------------
+shapes = pd.read_excel("D:\\Julian\\3Feb18\\shapes.xlsx")
+shapes.set_index('shape_id', inplace = True)
+
+#create two list (lat & lon) for each shape
+for i in range(0, len(mydict[user_route_id])):
+    latlon_shape = shapes.loc[mydict[user_route_id][i] ,["shape_pt_lat","shape_pt_lon"]]
+    list_lat_shape[i] = latlon_shapes['shape_pt_lat'].tolist()
+    list_lon_shape[i] = latlon_shapes['shape_pt_lon'].tolist()
+
+#create dictionary, key = lat as a list, value = lon as a list, both lat & lon for one shape ID
+#each shape ID is one element of a list, a list of shape for one single route ID
