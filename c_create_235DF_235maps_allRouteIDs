@@ -16,8 +16,7 @@ shapes.set_index('shape_id', inplace = True)
 list_collect_unique_shapes_allUserRouteID = []
 df_info_shapesFile = []
 
-#for i in range(0,len(unique_routeIDs_list)):
-for i in range(0,3):
+for i in range(0,len(unique_routeIDs_list)):
     if isinstance(trips.loc[int(unique_routeIDs_list[i]),"shape_id"].tolist(), int):
     #if len(trips.loc[int(unique_routeIDs_list[i]),"shape_id"].tolist()) == 1:
         list_collect_unique_shapes_allUserRouteID.append(trips.loc[int(unique_routeIDs_list[i]),"shape_id"].tolist())
