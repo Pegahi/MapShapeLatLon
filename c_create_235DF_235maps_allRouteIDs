@@ -1,0 +1,36 @@
+#this piece of code creates a df containing lat, lon, distance for all shapes of a single route ID and does this for all route IDs
+#it then saves all these dfs (235 dfs) with the route ID as their name
+#finally it plots 235 maps (each map containing all shape IDs of a single route ID) 
+# the code saves 235 csv files and 235 maps on the desktop!
+
+import pandas as pd
+import folium
+
+trips = pd.read_excel("Desktop\\trips.xlsx")
+unique_routeIDs_list = list(set(trips.loc[:,"route_id"].tolist()))
+trips.set_index('route_id', inplace = True)
+
+shapes = pd.read_excel("Desktop\\shapes.xlsx")
+shapes.set_index('shape_id', inplace = True)
+
+list_collect_unique_shapes_allUserRouteID = []
+df_info_shapesFile = []
+
+#for i in range(0,len(unique_routeIDs_list)):
+for i in range(0,3):
+    if isinstance(trips.loc[int(unique_routeIDs_list[i]),"shape_id"].tolist(), int):
+    #if len(trips.loc[int(unique_routeIDs_list[i]),"shape_id"].tolist()) == 1:
+        list_collect_unique_shapes_allUserRouteID.append(trips.loc[int(unique_routeIDs_list[i]),"shape_id"].tolist())
+    else:
+        list_collect_unique_shapes_allUserRouteID.append(list(set(trips.loc[int(unique_routeIDs_list[i]),"shape_id"].tolist())))
+    a = "Desktop\\" + str(unique_routeIDs_list[i]) + ".csv"
+    df_info_shapesFile = shapes.loc[list_collect_unique_shapes_allUserRouteID[i],["shape_pt_lat","shape_pt_lon","shape_dist_traveled"]]
+    df_info_shapesFile.to_csv(a , index = False)
+    
+    df_latlon = shapes.loc[list_collect_unique_shapes_allUserRouteID[i],["shape_pt_lat","shape_pt_lon"]]
+    latlon = [tuple(x) for x in df_latlon.values]
+    mapit = folium.Map(location=[49.2827, 123.1207], tiles = "Stamen Toner")
+    a = "Desktop\\" + str(unique_routeIDs_list[i]) + ".html"
+    for coord in latlon:
+        folium.Marker(location=[coord[0], coord[1]]).add_to(mapit)
+        mapit.save(a)
