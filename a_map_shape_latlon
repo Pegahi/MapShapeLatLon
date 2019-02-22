@@ -11,7 +11,6 @@ row_data_trips = trips.loc[ int(user_route_id) , : ]
 shape_id_from_trips = row_data_trips.loc[: , "shape_id"].tolist()
 shape_id_from_trips = set(shape_id_from_trips)
 shape_id_from_trips = list(shape_id_from_trips)
-#shape_id_from_trips
 
 ##get latlon from shapes
 shapes = pd.read_excel("Desktop\\shapes.xlsx")
