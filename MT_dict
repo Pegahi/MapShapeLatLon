@@ -62,4 +62,20 @@ while i <= a:
         i += 1 #cux we dont want to include like 6th index which is 0 to our list...
         k += 1 # dictionary key
 
+# example: line 66 gives first MT followed by the speed values
 MT_MT_list[0]
+
+# plot micro-trips:
+
+from matplotlib import pyplot as plt
+a = len(MT_MT_list)
+x = []
+y = []
+
+for i in range(20): #this is first 20 MTs, could be a!
+    y.append(list (MT_MT_list[i].values())[0])
+    x.append([j for j in range(len(y[i]))])
+    plt.plot(x[i], y[i], label = str(i))
+    plt.legend()
+    
+plt.show()
