@@ -1,0 +1,65 @@
+import pandas as pd
+import numpy as np
+%matplotlib inline
+
+# df.head()
+# df.dtypes
+# df.plot(x='Unix', y='Speed', xlim = (df.iloc[0,0], df.iloc[100,0]), style = ["*"])
+# df_resampled.plot(y = "Speed", xlim = (df.index.values[0], df.index.values[100]), style = ["*"])
+# df.to_csv(r'Desktop\df.csv')
+# df = df.reset_index()
+# my_list[:] = []
+# a, b = df.shape
+
+# df = df.reset_index(drop = True)
+# df = df[np.isfinite(df["Speed"])]
+# df["Speed"].first_valid_index()
+# df.iloc[299,1]
+# isinstance (df.index, pd.DatetimeIndex)
+
+df = pd.read_excel("Desktop\\7-30.xlsx")
+
+df.drop(df.index[:299], inplace = True)
+
+df ["datetime"] = pd.to_datetime(df.Unix, unit = 'ms')
+df.set_index("datetime", inplace = True)
+
+df.drop (columns = "Timestamp", inplace = True)
+
+df_resampled_second = pd.DataFrame()
+df_resampled_second ["Speed"] = df.Speed.resample("S").mean()
+df_resampled_second = df_resampled_second.reset_index()
+
+data = {"datetime": "2018-07-30 13:11:44", "Speed" : "0"}
+first_speed0_df = pd.DataFrame(data, index=[0])
+
+df_second = pd.concat([first_speed0_df, df_resampled_second])
+
+zero_Speed_index_list = df_second[df_second["Speed"] == 0].index.tolist()
+
+df_resampled_second.to_csv(r'Desktop\todayyeruzedigast.csv')
+
+i = 0
+j = 0
+k = 1
+a, b = df.shape
+MT_list = []
+MT_MT_list = []
+data = []
+
+while i <= a:
+    while i < (float(zero_Speed_index_list[j]) - 1):
+        MT_list.append(df_resampled_second.iloc[i, 1])
+        i += 1
+    else:
+        data = MT_list
+        #df_MTs = df_MTs.append(data, ignore_index=True)
+        
+        dict = {str(k) : MT_list}
+        MT_MT_list.append(dict)
+        MT_list = []
+        j += 1
+        i += 1 #cux we dont want to include like 6th index which is 0 to our list...
+        k += 1 # dictionary key
+
+MT_MT_list[0]
